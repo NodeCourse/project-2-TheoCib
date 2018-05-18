@@ -1,0 +1,14 @@
+header
+    title Confirmation
+link(rel="stylesheet", href="/stylesheet.css")
+
+    if user
+        p Compte: #{user.firstname}
+        a.connect(href="/api/logout") Deconnexion
+    else
+        a.connect(href="/signup") Inscription
+        br
+        a.connect(href="/login") Connexion
+body
+    p Vos réponses ont bien été envoyées.
+    a(href="/") Retour liste questionnaires.

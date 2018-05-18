@@ -1,8 +1,33 @@
-form(method="POST")
-    input(type="text", name="title", placeholder="Titre du questionnaire")
-    input(type="text", name="topic", placeholder="Sujet du questionnaire")
-    input(type="text", name="question1", placeholder="Question 1")
-    input(type="text", name="question2", placeholder="Question 2")
-    input(type="text", name="question3", placeholder="Question 3")
-    input(type="text", name="question4", placeholder="Question 4")
-    button(type="submit") Créer questionnaire
+header
+    link(rel="stylesheet", href="/stylesheet.css")
+    title Création questionnaire
+    h1 Créer un questionnaire
+
+    if user
+        p Compte: #{user.firstname}
+        a.connect(href="/api/logout") Deconnexion
+    else
+        a.connect(href="/signup") Inscription
+        br
+        a.connect(href="/login") Connexion
+
+body
+    if user
+        form.addform(method="POST")
+            input(type="text", name="title", placeholder="Titre du questionnaire")
+            input(type="text", name="topic", placeholder="Sujet du questionnaire")
+            br
+            input(type="text", name="question1", placeholder="Question 1")
+            input(type="text", name="question2", placeholder="Question 2")
+            input(type="text", name="question3", placeholder="Question 3")
+            input(type="text", name="question4", placeholder="Question 4")
+            br
+            button(type="submit") Créer questionnaire
+            a(href="/") Retour liste questionnaires
+
+    else
+        p Veuilliez vous connecter pour créer un questionnaire
+        a(href="/signup") Inscription
+        br
+        a(href="/login") Connexion
+        a(href="/") Retour liste questionnaires

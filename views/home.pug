@@ -1,11 +1,20 @@
-a(href="/signup") Inscription
-br
-a(href="/login") Connexion
-br
-a(href="/surveyadd") Créer un questionnaire
+header
+    link(rel="stylesheet", href="/stylesheet.css")
+    title Questionnaires
+    h1 Questionnaire.com
 
-for survey in surveys
-    div
-        h1 Titre: #{survey.title}
-        h1 Sujet: #{survey.topic}
-        a(href="/answersurvey/" + survey.id) Répondre à ce questionnaire
+    if user
+        p Compte: #{user.firstname}
+        a.connect(href="/api/logout") Deconnexion
+    else
+        a.connect(href="/signup") Inscription
+        br
+        a.connect(href="/login") Connexion
+body
+    a(href="/surveyadd") Créer un questionnaire
+
+    for survey in surveys
+        div.post
+            h1 Titre: #{survey.title}
+            h1 Sujet: #{survey.topic}
+            a(href="/answersurvey/" + survey.id) Répondre à ce questionnaire

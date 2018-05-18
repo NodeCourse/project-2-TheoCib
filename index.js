@@ -51,6 +51,7 @@ passport.deserializeUser((email, cb) => {
 });
 
 //Que faire si les données sont justes/fausses----------------------
+//Sur la page login
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login'
@@ -121,14 +122,19 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/surveyadd', (req, res) => {
-    res.render("surveyadd");
+    res.render("surveyadd", { user: req.user});
 });
+
+app.get('/confirme', (req, res) => {
+    res.render("confirme", { user: req.user});
+});
+
 app.get('/answersurvey/:surveyId', (req, res) => {
     surveyId = req.params.surveyId
     Survey
         .findOne({include: [Question], where: {id: surveyId}})
         .then((survey) => {
-            res.render("answersurvey", {survey})
+            res.render("answersurvey", {survey, user: req.user})
         })
 });
 
@@ -187,9 +193,7 @@ app.post('/answersurvey/:surveyId', (req, res) => {
         .then(function () {
             return Question.findAll({where: {surveyId: surveyId}})
         })
-        //.findAll({where: {surveyId: surveyId}})
         .then((question) => {
-            console.log(question);
             for (let i=0 ; i < question.length; i++) {
                 Answer.create({
                     answerContent: req.body["answer" + question[i].id],
@@ -198,7 +202,7 @@ app.post('/answersurvey/:surveyId', (req, res) => {
             }
         })
         .then(() => {
-            res.redirect('/')
+            res.redirect('/confirme')
         })
 });
 

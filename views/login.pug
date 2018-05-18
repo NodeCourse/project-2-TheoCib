@@ -1,4 +1,11 @@
-form(method="POST")
-    input(type="text", name="username", placeholder="Email")
-    input(type="password", name="password", placeholder="Mot de passe")
-    button(type="submit") Se connecter
+header
+    link(rel="stylesheet", href="/stylesheet.css")
+    title Connexion
+    h1 Se connecter
+body
+    form(method="POST")
+        input(type="text", name="username", placeholder="Email")
+        input(type="password", name="password", placeholder="Mot de passe")
+        button(type="submit") Se connecter
+        a(href="/signup") Pas encore de compte? Inscription
+        a(href="/") Retour liste questionnaires
