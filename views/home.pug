@@ -1,0 +1,11 @@
+a(href="/signup") Inscription
+br
+a(href="/login") Connexion
+br
+a(href="/surveyadd") Créer un questionnaire
+
+for survey in surveys
+    div
+        h1 Titre: #{survey.title}
+        h1 Sujet: #{survey.topic}
+        a(href="/answersurvey/" + survey.id) Répondre à ce questionnaire

@@ -1,0 +1,9 @@
+h1 #{survey.title}
+h1 #{survey.topic}
+
+form(method="POST", action="/answersurvey/" + survey.id)
+    for question in survey.questions
+        p #{question.content}
+        input(type="text", name="answer" + question.id, placeholder="Réponse")
+    br
+    button(type="submit") Répondre
