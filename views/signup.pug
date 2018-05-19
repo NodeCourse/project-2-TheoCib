@@ -1,0 +1,16 @@
+header
+    title Inscription
+    h1 S'inscrire
+    link(rel="stylesheet", href="/stylesheet.css")
+
+
+body
+
+    form.addform(method="POST")
+        input(type="text", name="firstname", placeholder="Prénom")
+        input(type="text", name="lastname", placeholder="Nom")
+        input(type="text", name="email", placeholder="aze.ty@mail.com")
+        input(type="password", name="password", placeholder="Mot de passe")
+        button(type="submit") S'inscrire
+        a(href="/login") Deja un compte ? Connexion
+        a(href="/") Retour liste questionnaires

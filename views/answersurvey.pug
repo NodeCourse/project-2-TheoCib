@@ -1,0 +1,28 @@
+html
+    header
+        title Questionnaire: #{survey.title}
+        link(rel="stylesheet", href="/stylesheet.css")
+        h1 Questionnaire #{survey.title}
+        if user
+            p Compte: #{user.firstname}
+            a.connect(href="/api/logout") Deconnexion
+            br
+            a.connect(href="/login") Profil
+        else
+            a.connect(href="/signup") Inscription
+            br
+            a.connect(href="/login") Connexion
+
+
+    body
+        a(href="/") Retour liste questionnaires
+        h1 Titre: #{survey.title}
+        h1 Sujet: #{survey.topic}
+        form.post(method="POST", action="/answersurvey/" + survey.id)
+            for question in survey.questions
+                p Question: #{question.content}
+                input(type="text", name="answer" + question.id, placeholder="Réponse")
+            br
+            button(type="submit") Envoyer les réponses
+
+        a(href="/") Retour liste questionnaires

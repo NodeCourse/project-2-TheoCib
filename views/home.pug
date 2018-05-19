@@ -1,0 +1,22 @@
+header
+    link(rel="stylesheet", href="/stylesheet.css")
+    title Questionnaires
+    h1 Questionnaire.com
+
+    if user
+        p Compte: #{user.firstname}
+        a.connect(href="/api/logout") Deconnexion
+        br
+        a.connect(href="/login") Profil
+    else
+        a.connect(href="/signup") Inscription
+        br
+        a.connect(href="/login") Connexion
+body
+    a.addlink(href="/surveyadd") Créer un questionnaire
+
+    for survey in surveys
+        div.post
+            h1 Titre: #{survey.title}
+            h1 Sujet: #{survey.topic}
+            a(href="/answersurvey/" + survey.id) Répondre à ce questionnaire
