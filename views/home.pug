@@ -6,12 +6,14 @@ header
     if user
         p Compte: #{user.firstname}
         a.connect(href="/api/logout") Deconnexion
+        br
+        a.connect(href="/login") Profil
     else
         a.connect(href="/signup") Inscription
         br
         a.connect(href="/login") Connexion
 body
-    a(href="/surveyadd") Créer un questionnaire
+    a.addlink(href="/surveyadd") Créer un questionnaire
 
     for survey in surveys
         div.post

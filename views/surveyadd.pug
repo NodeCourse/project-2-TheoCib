@@ -6,6 +6,9 @@ header
     if user
         p Compte: #{user.firstname}
         a.connect(href="/api/logout") Deconnexion
+        br
+        a.connect(href="/login") Profil
+
     else
         a.connect(href="/signup") Inscription
         br
@@ -29,5 +32,8 @@ body
         p Veuilliez vous connecter pour créer un questionnaire
         a(href="/signup") Inscription
         br
+        br
         a(href="/login") Connexion
+        br
+        br
         a(href="/") Retour liste questionnaires

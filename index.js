@@ -68,27 +68,28 @@ const db = new Sequelize('questionnaire', 'root', '', {
     host: 'localhost',
     dialect: 'mysql'
 });
-
+//Table user
 const User = db.define('user', {
     firstname: {type: Sequelize.STRING},
     lastname: {type: Sequelize.STRING},
     email: {type: Sequelize.STRING},
     password: {type: Sequelize.STRING}
 });
-
+//Table questionnaires
 const Survey = db.define('survey', {
     title: {type: Sequelize.STRING},
     topic: {type: Sequelize.STRING}
 });
-
+//Tables questions (belongsto(survey))
 const Question = db.define('question', {
     content: {type: Sequelize.STRING}
 });
-
+//Tables des réponses (belongsto(question))
 const Answer = db.define('answer', {
     answerContent: {type: Sequelize.STRING}
 });
 
+//Crée les tables
 function sync() {
     User.sync();
     Survey.sync();
@@ -96,6 +97,12 @@ function sync() {
     Answer.sync();
 }
 
+/*
+hiérarchie des tables
+Survey
+------Questions
+---------------Answer
+ */
 Survey.hasMany(Question);
 Question.belongsTo(Survey);
 Question.hasMany(Answer);
@@ -118,19 +125,22 @@ app.get('/signup', (req, res) => {
 
 //page connexion
 app.get('/login', (req, res) => {
-    res.render("login");
+    res.render("login", { user: req.user});
 });
 
+//page créer un questionnaire
 app.get('/surveyadd', (req, res) => {
     res.render("surveyadd", { user: req.user});
 });
 
+//Confirmation de réponse questionnaire
 app.get('/confirme', (req, res) => {
     res.render("confirme", { user: req.user});
 });
 
+//page répondre à un questionnaire
 app.get('/answersurvey/:surveyId', (req, res) => {
-    surveyId = req.params.surveyId
+    surveyId = req.params.surveyId;
     Survey
         .findOne({include: [Question], where: {id: surveyId}})
         .then((survey) => {
@@ -139,6 +149,7 @@ app.get('/answersurvey/:surveyId', (req, res) => {
 });
 
 //posts----------------------
+//Post inscription
 app.post('/signup', (req, res) => {
     User
         .sync()
@@ -156,6 +167,10 @@ app.post('/signup', (req, res) => {
         })
 });
 
+//Post créer un questionnaire
+/*
+Nous avons pour l'instant seulement 4 questions. Possibilité d'évolution pour permettre aux users d'en ajouter.
+ */
 app.post('/surveyadd', (req, res) => {
     Survey.create({
         title: req.body.title,
@@ -185,9 +200,15 @@ app.post('/surveyadd', (req, res) => {
         })
 });
 
+//Post répondre a un questionnaire
+/*
+Ici, on fait un findAll sur la table question en utilisant l'ID de survey
+On fait une boucle sur le tableau retourné, dans le cas ou le code évolue pour permettre plus de 4 questions.
+On passe enfin l'id de la question dans la clé étrangère de la table Answer.
+ */
 app.post('/answersurvey/:surveyId', (req, res) => {
-    let surveyId = req.params.surveyId;
 
+    let surveyId = req.params.surveyId;
     Answer
         .sync()
         .then(function () {
@@ -206,4 +227,5 @@ app.post('/answersurvey/:surveyId', (req, res) => {
         })
 });
 
+//Connexion sur le port 3000
 app.listen(3000);

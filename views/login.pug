@@ -1,11 +1,28 @@
-header
-    link(rel="stylesheet", href="/stylesheet.css")
-    title Connexion
-    h1 Se connecter
-body
-    form(method="POST")
-        input(type="text", name="username", placeholder="Email")
-        input(type="password", name="password", placeholder="Mot de passe")
-        button(type="submit") Se connecter
-        a(href="/signup") Pas encore de compte? Inscription
+if user
+    header
+        h1 Bienvenue #{user.firstname}
+        link(rel="stylesheet", href="/stylesheet.css")
+        a.connect(href="/api/logout") Deconnexion
+        br
+        a.connect(href="/") Retour liste questionnaires
+    body
+        h2 Vous êtes connecté sous #{user.firstname}
+        div.post
+            p Nom: #{user.lastname}
+            p Prénom: #{user.firstname}
+            p Email: #{user.email}
+            a(href="/api/logout") Ce n'est pas vous ? Deconnexion
+
         a(href="/") Retour liste questionnaires
+else
+    header
+        link(rel="stylesheet", href="/stylesheet.css")
+        title Connexion
+        h1 Se connecter
+    body
+        form.addform(method="POST")
+            input(type="text", name="username", placeholder="Email")
+            input(type="password", name="password", placeholder="Mot de passe")
+            button(type="submit") Se connecter
+            a(href="/signup") Pas encore de compte? Inscription
+            a(href="/") Retour liste questionnaires
